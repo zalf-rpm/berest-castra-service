@@ -46,11 +46,11 @@
 ;;; internal ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 #_(defn new-message [db-val from conv text]
-  {:from from, :conv conv, :text text})
+   {:from from, :conv conv, :text text})
 
 #_(defn add-message [db-val from conv text]
-  (let [cons* #(cons %2 (or %1 '()))]
-    (update-in db-val [:messages conv] cons* (new-message db-val from conv text))))
+   (let [cons* #(cons %2 (or %1 '()))]
+     (update-in db-val [:messages conv] cons* (new-message db-val from conv text))))
 
 (defn get-farms
   [db user-id]
@@ -75,21 +75,21 @@
    :full-selected-weather-stations {}
 
    :technology nil #_{:technology/cycle-days 1
-                :technology/outlet-height 200
-                :technology/sprinkle-loss-factor 0.4
-                :technology/type :technology.type/drip ;:technology.type/sprinkler
-                :donation/min 1
-                :donation/max 30
-                :donation/opt 20
-                :donation/step-size 5}
+                      :technology/outlet-height 200
+                      :technology/sprinkle-loss-factor 0.4
+                      :technology/type :technology.type/drip ;:technology.type/sprinkler
+                      :donation/min 1.0
+                      :donation/max 30.0
+                      :donation/opt 20.0
+                      :donation/step-size 5.0}
 
    #_:plot #_{:plot/stt 6212
-          :plot/slope 1
-          :plot/field-capacities []
-          :plot/fc-pwp-unit :soil-moisture.unit/volP
-          :plot/permanent-wilting-points []
-          :plot/ka5-soil-types []
-          :plot/groundwaterlevel 300}
+              :plot/slope 1
+              :plot/field-capacities []
+              :plot/fc-pwp-unit :soil-moisture.unit/volP
+              :plot/permanent-wilting-points []
+              :plot/ka5-soil-types []
+              :plot/groundwaterlevel 300}
 
    :user-credentials nil})
 
@@ -154,22 +154,22 @@
 
 
 #_(defrpc get-minimal-all-crops
-  "returns the minimal version of all crops, a list of
+   "returns the minimal version of all crops, a list of
   [{:crop/id :id
     :crop/name :name
     :crop/symbol :symbol}]
     currently"
-  [& [user-id pwd]]
-  {:rpc/pre [(nil? user-id)
-             (rules/logged-in?)]}
-  (let [db (db/current-db)
+   [& [user-id pwd]]
+   {:rpc/pre [(nil? user-id)
+              (rules/logged-in?)]}
+   (let [db (db/current-db)
 
-        cred (if user-id
-               (db/credentials* db user-id pwd)
-               (:user @*session*))]
-    (when cred
-      (map #(select-keys % [:crop/id :crop/name :crop/symbol])
-           (data/db->min-all-crops db)))))
+         cred (if user-id
+                (db/credentials* db user-id pwd)
+                (:user @*session*))]
+     (when cred
+       (map #(select-keys % [:crop/id :crop/name :crop/symbol])
+            (data/db->min-all-crops db)))))
 
 
 
@@ -220,8 +220,8 @@
       (try
         (get-weather-station-data* db weather-station-id years)
         (catch Exception e
-          (throw (ex (str "Couldn't get data from weather station with id: " weather-station-id "!") {}))))
-      )))
+          (throw (ex (str "Couldn't get data from weather station with id: " weather-station-id "!") {})))))))
+
 
 (defrpc import-weather-data
         [weather-station-id csv-data & {:keys [user-id pwd] :as opts}]
@@ -698,9 +698,9 @@
                        :int (int value)
                        value)
 
-              tx-data [[:db/add entity-id (d/entid db attr) value*]]
+              tx-data [[:db/add entity-id (d/entid db attr) value*]]]
               ;_ (println "tx-data: " (pr-str tx-data))
-              ]
+
           (when cred
             (try
               (d/transact (db/connection) tx-data)
@@ -745,8 +745,8 @@
               value-value* (case value-type
                              :double (double value-value)
                              :int (int value-value)
-                             value-value)
-              ]
+                             value-value)]
+
           (when cred
             (try
               (data/create-new-crop-kv-pair (db/connection) (:user/id cred) crop-id
@@ -773,28 +773,28 @@
 
 
 #_(defrpc update-weather-station
-  [weather-station-id name lat lng & [user-id pwd]]
-  {:rpc/pre [(nil? user-id)
-             (rules/logged-in?)]}
-  (let [db (db/current-db)
+   [weather-station-id name lat lng & [user-id pwd]]
+   {:rpc/pre [(nil? user-id)
+              (rules/logged-in?)]}
+   (let [db (db/current-db)
 
-        cred (if user-id
-               (db/credentials* db user-id pwd)
-               (:user @*session*))
+         cred (if user-id
+                (db/credentials* db user-id pwd)
+                (:user @*session*))
 
-        (d/q '[:find ?ws-e #_?year
-               :in $ ?ws-id
-               :where
-               [?-e :user/id ?user-id]
-               [?user-e :user/weather-stations ?ws-e]]
-             db weather-station-id)
+         (d/q '[:find ?ws-e #_?year
+                :in $ ?ws-id
+                :where
+                [?-e :user/id ?user-id]
+                [?user-e :user/weather-stations ?ws-e]]
+              db weather-station-id)]
 
-        ]
-    (when cred
-      (d/transact (db/connection)
-                  [(when name [:db/add [:weather-station/id weather-station-id] :weather-station/name name])
-                   (when lat [:db/add [:weather-station/id weather-station-id] :weather-station/g name])
-                   ]))))
+
+     (when cred
+       (d/transact (db/connection)
+                   [(when name [:db/add [:weather-station/id weather-station-id] :weather-station/name name])
+                    (when lat [:db/add [:weather-station/id weather-station-id] :weather-station/g name])]))))
+
 
 
 (defrpc login
@@ -875,8 +875,8 @@
                                                tech
                                                (take-last prognosis-days inputs)
                                                (:soil-moistures (last measured-soil-moistures)))
-        recommendation* (merge recommendation (bc/recommendation-states (:state recommendation)))
-        ]
+        recommendation* (merge recommendation (bc/recommendation-states (:state recommendation)))]
+
     (when cred
       {:recommendation recommendation*
        :soil-moistures soil-moistures
@@ -931,17 +931,17 @@
 
                   :fallow (data/db->crop-by-name db 0 :cultivation-type 0 :usage 0)
 
-                  :plot.annual/technology {:donation/step-size 5,
-                                           :donation/opt 20,
-                                           :donation/max 30,
-                                           :donation/min 5,
+                  :plot.annual/technology {:donation/step-size 5.0,
+                                           :donation/opt 20.0,
+                                           :donation/max 30.0,
+                                           :donation/min 5.0,
                                            :technology/type :technology.type/sprinkler,
                                            :technology/sprinkle-loss-factor 0.2,
                                            :technology/cycle-days 1}
 
                   :plot/slope {:slope/key 1
                                :slope/description "eben"
-                               :slope/symbol "NFT 01" }
+                               :slope/symbol "NFT 01"}
 
                   :slope slope
 
@@ -951,10 +951,10 @@
                   :plot/damage-compaction-depth 300
                   :plot/irrigation-area 1.0
                   :plot/crop-area 1.2
-                  :plot/groundwaterlevel 300
+                  :plot/groundwaterlevel 300}
 
                   ;:plot.annual/year 1994
-                  }
+
 
           ;_ (println "plot**: ")
           ;_ (pp/pprint plot**)
@@ -975,8 +975,8 @@
                                5))])
                    sorted-climate-data)
           ;_ (println "res: " res)
-          _ (println "calculated run-id: " run-id)
-          ]
+          _ (println "calculated run-id: " run-id)]
+
       {:run-id run-id
        :result (into {} res)}
       #_(mapv second res))))
@@ -989,11 +989,11 @@
 
               cred (if user-id
                      (db/credentials* db user-id pwd)
-                     (:user @*session*))
+                     (:user @*session*))]
 
               ;_ (println "crop-id: " crop-id " climate-data: ")
               ;_ (pp/pprint climate-data)
-              ]
+
           (when cred
             (calculate-from-remote-data* db run-id crop-id data))))
 
@@ -1005,8 +1005,8 @@
 
               cred (if user-id
                      (db/credentials* db user-id pwd)
-                     (:user @*session*))
-              ]
+                     (:user @*session*))]
+
           (when cred
             (import-dwd/set-import-time-settings hour minute))))
 
@@ -1018,8 +1018,8 @@
 
               cred (if user-id
                      (db/credentials* db user-id pwd)
-                     (:user @*session*))
-              ]
+                     (:user @*session*))]
+
           #_(println "from: " (pr-str (ctf/parse (ctf/formatters :date) from))
                    " to: " (pr-str (ctf/parse (ctf/formatters :date) to)))
           (when cred
