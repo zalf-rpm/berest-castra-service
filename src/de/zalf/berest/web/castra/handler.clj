@@ -18,14 +18,14 @@
 (def server (atom nil))
 
 #_(defn wrap-access-control-allow-*
-   [handler]
-   (fn [request]
-     (when-let [response (handler request)]
-       (-> response
-           (ring-resp/header ,,, "Access-Control-Allow-Origin" "*")
-           #_(ring-resp/header ,,, "Access-Control-Allow-Headers" "origin, x-auth-token, x-csrf-token, content-type, accept")
-           #_(ring-resp/header ,,, "X-Dev-Mode" "true")
-           #_(#(do (println %) %))))))
+  [handler]
+  (fn [request]
+    (when-let [response (handler request)]
+      (-> response
+          (ring-resp/header ,,, "Access-Control-Allow-Origin" "*")
+          #_(ring-resp/header ,,, "Access-Control-Allow-Headers" "origin, x-auth-token, x-csrf-token, content-type, accept")
+          #_(ring-resp/header ,,, "X-Dev-Mode" "true")
+          #_(#(do (println %) %))))))
 
 (defn wrap-access-control-allow-*
   [handler]
