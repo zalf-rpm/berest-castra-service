@@ -862,6 +862,12 @@
         measured-soil-moistures (drop-last prognosis-days soil-moistures)
         ;prognosis-soil-moistures (take-last prognosis-days soil-moistures)
 
+        ;inp (map (fn [i] (select-keys i [:abs-day :precipitation :evaporation])) inputs)
+        ;_ (println "inputs: " (pr-str (take 5 inp)))
+        ;sms (map (fn [sm] (select-keys sm [:abs-day :soil-moistures])) soil-moistures)
+        ;_ (println "sms: " (pr-str (take 5 sms)))
+
+
         ;_ (println "res: " (pr-str res))
 
         {slope :plot/slope
