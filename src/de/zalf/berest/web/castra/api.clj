@@ -1029,8 +1029,8 @@
           #_(println "from: " (pr-str (ctf/parse (ctf/formatters :date) from))
                    " to: " (pr-str (ctf/parse (ctf/formatters :date) to)))
           (when cred
-            (import-dwd/bulk-import-dwd-data-into-datomic (ctf/parse (ctf/formatter :date) from)
-                                                          (ctf/parse (ctf/formatter :date) to)))))
+            (import-dwd/bulk-import-dwd-data-into-datomic (ctf/parse (ctf/formatters :date) from)
+                                                          (ctf/parse (ctf/formatters :date) to)))))
 
 
 
