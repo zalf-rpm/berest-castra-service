@@ -1,5 +1,5 @@
 (defproject
-  de.zalf.berest/berest-castra-service "0.2.1"
+  de.zalf.berest/berest-castra-service "0.2.2"
 
   :description "BEREST CASTRA service"
   :url "http://example.com/FIXME"
@@ -7,7 +7,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.7.0"]
 
-                 [de.zalf.berest/berest-core "0.2.1"]
+                 [de.zalf.berest/berest-core "0.2.2"]
 
                  [compojure "1.4.0"]
                  [hoplon/castra "3.0.0-alpha3"]
@@ -35,6 +35,8 @@
                  "my.datomic.com" {:url "https://my.datomic.com/repo"
                                    :username "michael.berg@zalf.de"
                                    :password "dfe713b3-62f0-469d-8ac9-07d6b02b0175"}}
+
+  :plugins [[lein-ring "0.12.0"]]
 
   :min-lein-version "2.0.0"
 
