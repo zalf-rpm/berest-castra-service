@@ -1,19 +1,18 @@
 (defproject
-  de.zalf.berest/berest-castra-service "0.2.2"
+  de.zalf.berest/berest-castra-service "0.2.3"
 
   :description "BEREST CASTRA service"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.7.0"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
 
-                 [de.zalf.berest/berest-core "0.2.2"]
+                 [de.zalf.berest/berest-core "0.2.3"]
 
                  [compojure "1.4.0"]
                  [hoplon/castra "3.0.0-alpha3"]
 
-                 [com.datomic/datomic-pro "0.9.5344" :exclusions [joda-time]]
-                 [com.amazonaws/aws-java-sdk-dynamodb "1.9.39" :exclusions [joda-time]]
+                 [com.datomic/datomic-free "0.9.5697"]
 
                  [clojurewerkz/quartzite "2.0.0"]
 
@@ -31,10 +30,9 @@
                  [clojure-csv "2.0.1"]
                  [org.clojure/core.match "0.2.2"]]
 
-  :repositories {
-                 "my.datomic.com" {:url "https://my.datomic.com/repo"
-                                   :username "michael.berg@zalf.de"
-                                   :password "dfe713b3-62f0-469d-8ac9-07d6b02b0175"}}
+  :jvm-opts ["-Xmx1g"
+             "-Dberest.datomic.url=datomic:free://localhost:4334/berest/"
+             "-Dimport.ftp.dwd.url=ftp://anonymous@tran.zalf.de/pub/net/wetter"]
 
   :plugins [[lein-ring "0.12.0"]]
 
