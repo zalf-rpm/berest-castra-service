@@ -56,6 +56,7 @@
       #_(cm/wrap-castra-session ,,, "a 16-byte secret")
       (wrap-session ,,, {:store (cookie-store {:key "a 16-byte secret"})})
       #_(wrap-file "resources/public")
+      (wrap-file "../berest-hoplon-client/target")
       (wrap-resource ,,, "public")
       (wrap-resource ,,, "website")
       (wrap-cors ,,, #".*")
@@ -71,8 +72,8 @@
   (-> app-routes
       (cm/wrap-castra ,,, 'de.zalf.berest.web.castra.api)
       #_(cm/wrap-castra-session ,,, "a 16-byte secret")
-      (wrap-session {:store (cookie-store {:key "a 16-byte secret"})})
-      (wrap-file public-path)
+      (wrap-session ,,, {:store (cookie-store {:key "a 16-byte secret"})})
+      (wrap-file ,,, public-path)
       (wrap-file-info)
       (run-jetty {:join? false
                   :port port})))
