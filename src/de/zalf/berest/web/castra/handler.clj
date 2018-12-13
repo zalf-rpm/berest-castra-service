@@ -52,6 +52,17 @@
 
 (def castra-service
   (-> app-routes
+      #_(#(print** 1 %))
+      (cm/wrap-castra ,,, 'de.zalf.berest.web.castra.api)
+      #_(#(print** 2 %))
+      (wrap-session ,,, {:store (cookie-store {:key "a 16-byte secret"})})
+      wrap-content-type
+      (wrap-file "../berest-hoplon-client/target")
+      wrap-access-control-allow-*
+      wrap-not-modified
+      #_(#(print** 3 %))))
+
+#_(-> app-routes
       (cm/wrap-castra ,,, 'de.zalf.berest.web.castra.api)
       #_(cm/wrap-castra-session ,,, "a 16-byte secret")
       (wrap-session ,,, {:store (cookie-store {:key "a 16-byte secret"})})
@@ -66,7 +77,7 @@
       wrap-access-control-allow-*
       #_print**
       wrap-not-modified
-      wrap-content-type))
+      wrap-content-type)
 
 (defn app [port public-path]
   (-> app-routes
