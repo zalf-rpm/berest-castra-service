@@ -13,3 +13,7 @@ pom.xml.asc
 
 berest-castra-service.iml
 .idea
+.calva
+.clj-kondo
+.cpcache
+.lsp

@@ -1,0 +1,16 @@
+{:paths ["src"]
+ :deps {;de.zalf.berest/berest-core {:mvn/version "0.2.3"}
+        de.zalf.berest/berest-core {:local/root "../berest-core"}
+        compojure/compojure {:mvn/version "1.6.2"}
+        hoplon/castra {:mvn/version "3.0.0-alpha7"}
+        com.datomic/datomic-free {:mvn/version "0.9.5697"}
+        clojurewerkz/quartzite {:mvn/version "2.0.0"}
+        ring-server/ring-server {:mvn/version "0.5.0"}
+        jumblerg/ring-cors {:mvn/version "2.0.0"}
+        fogus/ring-edn {:mvn/version "0.3.0"}
+        clj-time/clj-time {:mvn/version "0.11.0"}
+        simple-time/simple-time {:mvn/version "0.2.1"}
+        clojure-csv/clojure-csv {:mvn/version "2.0.1"}
+        org.clojure/core.match {:mvn/version "0.2.2"}}
+ :aliases {:build {:deps {io.github.clojure/tools.build {:git/tag "v0.7.5" :git/sha "34727f7"}}
+                   :ns-default build}}}

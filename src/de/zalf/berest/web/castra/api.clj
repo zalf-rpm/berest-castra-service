@@ -12,14 +12,12 @@
             [de.zalf.berest.core.import.dwd-data :as import-dwd]
             [de.zalf.berest.core.import.zalf-climate-data :as import-csv]
             [datomic.api :as d]
-            [simple-time.core :as time]
             [clj-time.core :as ctc]
             [clj-time.format :as ctf]
             [clj-time.coerce :as ctcoe]
             [clojure-csv.core :as csv]
             [de.zalf.berest.core.core :as bc]
-            [clojure.tools.logging :as log]
-            [clojure.pprint :as pp])
+            [clojure.tools.logging :as log])
   (:import (java.io ByteArrayOutputStream)))
 
 (def entity-map-writer

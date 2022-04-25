@@ -5,12 +5,14 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
 
-                 [de.zalf.berest/berest-core "0.2.3"]
+                 #_[org.clojure/core.unify "0.5.7"]
 
-                 [compojure "1.4.0"]
-                 [hoplon/castra "3.0.0-alpha3"]
+                 [de.zalf.berest/berest-core "0.2.3" :exclusions [commons-codec joda-time]]
+
+                 [compojure "1.6.2" :exclusions [commons-codec]]
+                 [hoplon/castra "3.0.0-alpha7"]
 
                  [com.datomic/datomic-free "0.9.5697"]
 
@@ -19,13 +21,13 @@
                  #_[org.zeromq/jeromq "0.3.5"]
                  #_[org.zeromq/cljzmq "0.1.4" :exclusions [org.zeromq/jzmq]]
 
-                 [ring "1.4.0"]
-                 [ring-server "0.4.0"]
-                 [jumblerg/ring.middleware.cors "1.0.1"]
+                 #_[ring "1.9.3"]
+                 [ring-server "0.5.0"]
+                 [jumblerg/ring-cors "2.0.0"]
                  [fogus/ring-edn "0.3.0"]
 
                  [simple-time "0.2.1"]
-                 [clj-time "0.11.0"]
+                 [clj-time "0.11.0" :exclusions [joda-time]]
 
                  [clojure-csv "2.0.1"]
                  [org.clojure/core.match "0.2.2"]]

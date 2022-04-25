@@ -1,19 +1,15 @@
 (ns de.zalf.berest.web.castra.handler
   (:require [ring.adapter.jetty :refer [run-jetty]]
-            [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.session :refer [wrap-session]]
             [ring.middleware.session.cookie :refer [cookie-store]]
             [ring.middleware.file :refer [wrap-file]]
             [ring.middleware.file-info :refer [wrap-file-info]]
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.not-modified :refer [wrap-not-modified]]
-            [ring.middleware.resource :refer [wrap-resource]]
             [castra.middleware :as cm]
-            [castra.core :as cc]
             [compojure.core :as c]
             [compojure.route :as route]
-            [ring.util.response :as ring-resp]
-            [ring.middleware.cors :as cors :refer [wrap-cors]]))
+            [ring.util.response :as ring-resp]))
 
 (def server (atom nil))
 
@@ -52,12 +48,13 @@
 
 (def castra-service
   (-> app-routes
-      #_(#(print** 1 %))
+      (#(print** %))
       (cm/wrap-castra ,,, 'de.zalf.berest.web.castra.api)
-      #_(#(print** 2 %))
+      (#(print** %))
       (wrap-session ,,, {:store (cookie-store {:key "a 16-byte secret"})})
       wrap-content-type
-      (wrap-file "../berest-hoplon-client/target")
+      #_(wrap-file "../berest-hoplon-client/target")
+      (wrap-file "../berest-hoplon-client/assets")
       wrap-access-control-allow-*
       wrap-not-modified
       #_(#(print** 3 %))))
@@ -104,3 +101,4 @@
 
 (defn -main
   [& args])
+
