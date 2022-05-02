@@ -796,10 +796,10 @@
 
 
 (defrpc login
-        [user-id pwd]
-        {:rpc/pre [(rules/login! user-id pwd)]}
-        (println "login user-id: " user-id)
-        (get-berest-state))
+  [user-id pwd]
+  {:rpc/pre [(rules/login! user-id pwd)]}
+  (println "login user-id: " user-id)
+  (get-berest-state))
 
 (defrpc rpc-login
         [user-id pwd]

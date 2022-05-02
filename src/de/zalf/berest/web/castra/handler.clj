@@ -28,10 +28,13 @@
   (fn [request]
     (when-let [response (handler request)]
       (-> response
+          #_(#(do (println "waca* 1: " %) %))
+          (ring-resp/header ,,, "Access-Control-Allow-Origin" "*")
+          #_(ring-resp/header ,,, "Access-Control-Allow-Methods" "POST, GET, OPTIONS")
+          (ring-resp/header ,,, "Access-Control-Allow-Headers" "origin, x-castra-validate-only, x-castra-csrf, x-auth-token, x-castra-tunnel, x-csrf-token, content-type, accept")
           (ring-resp/header ,,, "Access-Control-Allow-Credentials" "true")
-          #_(ring-resp/header ,,, "Access-Control-Allow-Headers" "origin, x-auth-token, x-csrf-token, content-type, accept")
           #_(ring-resp/header ,,, "X-Dev-Mode" "true")
-          #_(#(do (println %) %))))))
+          #_(#(do (println "waca* 2: " %) %))))))
 
 (defn print**
   [handler]
@@ -48,16 +51,16 @@
 
 (def castra-service
   (-> app-routes
-      (#(print** %))
+      #_(#(print** %))
       (cm/wrap-castra ,,, 'de.zalf.berest.web.castra.api)
-      (#(print** %))
+      #_(#(print** %))
       (wrap-session ,,, {:store (cookie-store {:key "a 16-byte secret"})})
       wrap-content-type
-      #_(wrap-file "../berest-hoplon-client/target")
+      (wrap-file "../berest-hoplon-client/target")
       (wrap-file "../berest-hoplon-client/assets")
       wrap-access-control-allow-*
       wrap-not-modified
-      #_(#(print** 3 %))))
+      #_(#(print** %))))
 
 #_(-> app-routes
       (cm/wrap-castra ,,, 'de.zalf.berest.web.castra.api)
