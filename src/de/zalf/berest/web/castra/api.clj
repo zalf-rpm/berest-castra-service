@@ -1001,7 +1001,7 @@
           (when cred
             (calculate-from-remote-data* db run-id crop-id data))))
 
-(defrpc set-climate-data-import-time
+#_(defrpc set-climate-data-import-time
         [hour minute & {:keys [user-id pwd]}]
         {:rpc/pre [(nil? user-id)
                    (rules/logged-in?)]}
@@ -1014,7 +1014,7 @@
           (when cred
             (import-dwd/set-import-time-settings hour minute))))
 
-(defrpc bulk-import-dwd-data-into-datomic
+#_(defrpc bulk-import-dwd-data-into-datomic
         [from to & {:keys [user-id pwd]}]
         {:rpc/pre [(nil? user-id)
                    (rules/logged-in?)]}
